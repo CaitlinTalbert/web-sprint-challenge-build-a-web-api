@@ -24,7 +24,7 @@ router.get("/:id", validateProjectId, (req, res) => {
 });
 
 //posts a new project
-router.post("/", (req, res, next) => {
+router.post("/", (req, res) => {
   const { name, description } = req.body;
 
   if (!name || !description) {
