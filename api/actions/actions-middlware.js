@@ -16,6 +16,21 @@ async function validateActionId(req, res, next) {
   }
 }
 
+async function validateAction(req, res, next) {
+  const { project_id, description, completed } = req.body;
+  if (!project_id || !description || typeof completed !== "boolean") {
+    res.status(400).json({
+      message: "Missing project ID, description, and completed",
+    });
+  } else {
+    req.project_id = project_id;
+    req.description = description;
+    req.completed = completed;
+    next();
+  }
+}
+
 module.exports = {
   validateActionId,
+  validateAction,
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const Action = require("./actions-model");
-const { validateActionId } = require("./actions-middlware");
+const { validateActionId, validateAction } = require("./actions-middlware");
 const router = express.Router();
 
 router.get("/", (req, res, next) => {
@@ -44,8 +44,30 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/:id", (req, res) => {});
+//update existing action
+router.put("/:id", validateActionId, validateAction, (req, res) => {
+  Action.update(req.params.id, {
+    project_id: req.project_id,
+    description: req.description,
+    completed: req.completed,
+  })
+    .then((updatedAction) => {
+      res.status(200).json(updatedAction);
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "There was an error updating this action",
+      });
+    });
+});
 
-router.delete("/:id", (req, res) => {});
+router.delete("/:id", validateActionId, async (req, res, next) => {
+  try {
+    await Action.remove(req.params.id);
+    res.json(req.action);
+  } catch (err) {
+    next(err);
+  }
+});
 
 module.exports = router;
