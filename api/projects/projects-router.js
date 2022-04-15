@@ -23,6 +23,7 @@ router.get("/:id", validateProjectId, (req, res) => {
     });
 });
 
+//posts a new project
 router.post("/", (req, res, next) => {
   const { name, description } = req.body;
 
@@ -43,9 +44,31 @@ router.post("/", (req, res, next) => {
     });
 });
 
-router.put("/:id", (req, res, next) => {});
+//updates existing project
+router.put("/:id", validateProjectId, validateProject, (req, res) => {
+  Project.update(req.params.id, {
+    name: req.name,
+    description: req.description,
+    completed: req.completed,
+  })
+    .then((updatedProject) => {
+      res.status(200).json(updatedProject);
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "There was an error updating the project",
+      });
+    });
+});
 
-router.delete("/:id", (req, res, next) => {});
+router.delete("/:id", validateProjectId, async (req, res, next) => {
+  try {
+    await Project.remove(req.params.id);
+    res.json(req.project);
+  } catch (err) {
+    next(err);
+  }
+});
 
 router.get("/:id/actions", (req, res, next) => {});
 

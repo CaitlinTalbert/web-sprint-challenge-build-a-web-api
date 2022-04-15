@@ -17,15 +17,15 @@ async function validateProjectId(req, res, next) {
 }
 
 async function validateProject(req, res, next) {
-  const { name, description, complete } = req.body;
-  if (!name || !description || typeof complete !== "boolean") {
+  const { name, description, completed } = req.body;
+  if (!name || !description || typeof completed !== "boolean") {
     res.status(400).json({
       message: "Missing name, description, and completed",
     });
   } else {
     req.name = name;
     req.description = description;
-    req.complete = complete;
+    req.completed = completed;
     next();
   }
 }
