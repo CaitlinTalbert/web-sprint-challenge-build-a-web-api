@@ -23,7 +23,26 @@ router.get("/:id", validateActionId, (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {});
+//posts a new action that includes project_id, description, notes
+router.post("/", (req, res) => {
+  const { project_id, description, notes } = req.body;
+
+  if (!project_id || !description || !notes) {
+    res.status(400).json({
+      message: "The required fields are missing",
+    });
+    return;
+  }
+  Action.insert(req.body)
+    .then((newAction) => {
+      res.status(201).json(newAction);
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: "Error updating action",
+      });
+    });
+});
 
 router.put("/:id", (req, res) => {});
 
