@@ -74,11 +74,11 @@ Inside `api/actions/actions-router.js` build endpoints for performing CRUD opera
   - Returns the newly created action as the body of the response.
   - If the request body is missing any of the required fields it responds with a status code 400.
   - When adding an action make sure the `project_id` provided belongs to an existing `project`.
-- [ ] `[PUT] /api/actions/:id`
+- [x] `[PUT] /api/actions/:id`
   - Returns the updated action as the body of the response.
   - If there is no action with the given `id` it responds with a status code 404.
   - If the request body is missing any of the required fields it responds with a status code 400.
-- [ ] `[DELETE] /api/actions/:id`
+- [x] `[DELETE] /api/actions/:id`
   - Returns no response body.
   - If there is no action with the given `id` it responds with a status code 404.
 
@@ -147,7 +147,26 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
-1. Understand and explain the use of Middleware.
-1. The basic principles of the REST architectural style.
-1. Understand and explain the use of Express Routers.
-1. Describe tooling used to manually test the correctness of an API.
+
+Node.js allows developers to use JavaScript which minimizes context switching and can share code between the server and client. JavaScript is single-threaded, asynchronous, and gives us access to the npm repository, which helps make Node.js extremely useful.
+
+Express is framework that sits on top of Node.js and makes it easier to build and manage middleware and functionality of web apps, APIs, web services, etc.
+
+2. Understand and explain the use of Middleware.
+
+Middleware are functions that can be chained together in a pipeline to handle requests. A middleware function can pass control on to the next
+function in the chain by using next();, or send back a response and end the chain by not calling next();.
+
+3. The basic principles of the REST architectural style.
+
+Everything is a resource, each resource is accessible via a unique URI, resources can have multiple representations,
+communication happens over a stateless protocol (HTTP), and resource management happens via HTTP methods.
+Using REST architecture to our APIs can make them scalable and simpler to maintain and extend.
+
+4. Understand and explain the use of Express Routers.
+
+Express Routers helps to create router handlers by handling validation, 404 errors, and specific routes to target API's.
+
+5. Describe tooling used to manually test the correctness of an API.
+
+I use postman and HTTPie to test the endpoints, it helps to target and test exactly what endpoints we are testing and data we should expect to receive.
